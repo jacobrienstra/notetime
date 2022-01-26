@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-styled-components",
+    "stylelint-order",
+    "stylelint-config-rational-order",
+    "stylelint-config-prettier"
+  ],
+  "plugins": [
+    "stylelint-prettier",
+    "stylelint-order",
+    "stylelint-config-rational-order/plugin"
+  ],
+  "rules": {
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": ["never"],
+    "value-keyword-case": null,
+    "selector-max-compound-selectors": null,
+    "order/properties-order": [[], { "severity": "warning" }],
+    "plugin/rational-order": [
+      true,
+      {
+        "border-in-box-model": false,
+        "empty-line-between-groups": false,
+        "severity": "warning"
+      }
+    ]
+  }
+}
