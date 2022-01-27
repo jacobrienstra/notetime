@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.css": "/notetime/static/css/main.31d6cfe0.css",
+    "main.js": "/notetime/static/js/main.84cec351.js",
+    "index.html": "/notetime/index.html",
+    "main.84cec351.js.map": "/notetime/static/js/main.84cec351.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.84cec351.js"
+  ]
+}
