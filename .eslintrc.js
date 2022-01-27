@@ -86,7 +86,6 @@ module.exports = {
     "react/require-default-props": "off",
     "react/destructuring-assignment": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/react-in-jsx-scope": "off",
     "react/default-props-match-prop-types": [
       "error",
       { allowRequiredDefaults: true },
