@@ -110,6 +110,14 @@ function App(): JSX.Element {
     setLap(0);
   };
 
+  const handleOnKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
+    e: KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (text.trim() === "" && e.key.length === 1) {
+      setLap(time);
+    }
+  };
+
   const handleOnKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = (
     e: KeyboardEvent<HTMLTextAreaElement>
   ) => {
@@ -119,7 +127,6 @@ function App(): JSX.Element {
         const entry = { time: lap, text };
         setEntries((ev) => [...ev, entry]);
       }
-      setLap(time);
       setText("");
     }
   };
@@ -151,6 +158,7 @@ function App(): JSX.Element {
           <textarea
             value={text}
             onKeyUp={handleOnKeyUp}
+            onKeyDown={handleOnKeyDown}
             onChange={handleChange}
             css={textEntry}
           />
