@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/notetime/static/css/main.31d6cfe0.css",
-    "main.js": "/notetime/static/js/main.5dd2f941.js",
+    "main.css": "/notetime/static/css/main.70bac5c9.css",
+    "main.js": "/notetime/static/js/main.b73ef364.js",
     "index.html": "/notetime/index.html",
-    "main.5dd2f941.js.map": "/notetime/static/js/main.5dd2f941.js.map"
+    "main.70bac5c9.css.map": "/notetime/static/css/main.70bac5c9.css.map",
+    "main.b73ef364.js.map": "/notetime/static/js/main.b73ef364.js.map"
   },
   "entrypoints": [
-    "static/css/main.31d6cfe0.css",
-    "static/js/main.5dd2f941.js"
+    "static/css/main.70bac5c9.css",
+    "static/js/main.b73ef364.js"
   ]
 }
