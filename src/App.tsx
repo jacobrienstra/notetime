@@ -1,5 +1,5 @@
+import { useSelector, useDispatch } from "react-redux";
 import React, {
-  useState,
   useEffect,
   KeyboardEventHandler,
   KeyboardEvent,
@@ -9,7 +9,21 @@ import React, {
 import { css } from "@emotion/react";
 
 import timeString from "./util";
-import Entry, { EntryProps } from "./Entry";
+import { RootState } from "./redux/store";
+import {
+  incTime10,
+  setLapTime,
+  start,
+  pause,
+  unpause,
+  stop,
+  resetTime,
+  resetLapTime,
+  resetText,
+  setText,
+} from "./redux/reducers/main";
+import { addEntry } from "./redux/reducers/entries";
+import Entry, { EntryProps } from "./components/Entry";
 
 const rootStyle = css`
   margin: 0;
@@ -62,19 +76,21 @@ const curEntryStyle = css`
 `;
 
 function App(): JSX.Element {
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0);
-  const [lap, setLap] = useState<number>(0);
-  const [text, setText] = useState<string>("");
-  const [entries, setEntries] = useState<EntryProps[]>([]);
+  const dispatch = useDispatch();
+
+  const isActive = useSelector((state: RootState) => state.main.isActive);
+  const isPaused = useSelector((state: RootState) => state.main.isPaused);
+  const time = useSelector((state: RootState) => state.main.time);
+  const lapTime = useSelector((state: RootState) => state.main.lapTime);
+  const text = useSelector((state: RootState) => state.main.text);
+  const entries = useSelector((state: RootState) => state.entries.list);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
 
-    if (isActive && isPaused === false) {
+    if (isActive && !isPaused) {
       interval = setInterval(() => {
-        setTime((t) => t + 10);
+        dispatch(incTime10());
       }, 10);
     } else if (interval != null) {
       clearInterval(interval);
@@ -88,12 +104,11 @@ function App(): JSX.Element {
   }, [isActive, isPaused]);
 
   const handleStart = () => {
-    setIsActive(true);
-    setIsPaused(false);
+    dispatch(start());
   };
 
   const handlePauseResume = () => {
-    setIsPaused(!isPaused);
+    dispatch(isPaused ? unpause() : pause());
   };
 
   const handleStartPause = () => {
@@ -105,16 +120,16 @@ function App(): JSX.Element {
   };
 
   const handleReset = () => {
-    setIsActive(false);
-    setTime(0);
-    setLap(0);
+    dispatch(stop());
+    dispatch(resetTime());
+    dispatch(resetLapTime());
   };
 
   const handleOnKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
     e: KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (text.trim() === "" && e.key.length === 1) {
-      setLap(time);
+      dispatch(setLapTime(time));
     }
   };
 
@@ -124,17 +139,17 @@ function App(): JSX.Element {
     if (e.key === "Enter") {
       e.preventDefault();
       if (text.trim() !== "") {
-        const entry = { time: lap, text };
-        setEntries((ev) => [...ev, entry]);
+        const entry: EntryProps = { time: lapTime, text };
+        dispatch(addEntry(entry));
       }
-      setText("");
+      dispatch(resetText());
     }
   };
 
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setText(event.target.value);
+    dispatch(setText(event.target.value));
   };
 
   return (
@@ -154,7 +169,7 @@ function App(): JSX.Element {
       </div>
       <div className="entries" css={entriesStyle}>
         <div className="currentEntry" css={curEntryStyle}>
-          {timeString(lap)}
+          {timeString(lapTime)}
           <textarea
             value={text}
             onKeyUp={handleOnKeyUp}

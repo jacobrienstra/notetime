@@ -1,7 +1,7 @@
 import * as React from "react";
 import { css } from "@emotion/react";
 
-import timeString from "./util";
+import timeString from "../util";
 
 const timeStringStyle = css`
   color: blue;
