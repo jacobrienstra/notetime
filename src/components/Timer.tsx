@@ -7,6 +7,7 @@ import {
   faStop,
   faUndo,
 } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
 import timeString from "../util";
@@ -109,12 +110,16 @@ function Timer(): JSX.Element {
       <div className="buttons" css={buttonStyle}>
         <button type="button" onClick={handleStartPause} css={playButton}>
           <FontAwesomeIcon
-            icon={isActive && !isPaused ? faPause : faPlay}
+            icon={
+              isActive && !isPaused
+                ? (faPause as IconProp)
+                : (faPlay as IconProp)
+            }
             size="2x"
           />
         </button>
         <button type="button" onClick={handleReset} css={stopButton}>
-          <FontAwesomeIcon icon={faUndo} size="2x" />
+          <FontAwesomeIcon icon={faUndo as IconProp} size="2x" />
         </button>
       </div>
     </div>
