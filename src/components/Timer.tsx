@@ -63,21 +63,26 @@ function Timer(): JSX.Element {
   const isPaused = useSelector((state: RootState) => state.main.isPaused);
   const time = useSelector((state: RootState) => state.main.time);
 
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | null = null;
+  let timerWorker: Worker;
 
-    if (isActive && !isPaused) {
-      interval = setInterval(() => {
+  const startTimerWorker = () => {
+    timerWorker = new Worker(`${process.env.PUBLIC_URL}/timerWorker.js`);
+    timerWorker.onmessage = (e: MessageEvent) => {
+      if (e?.data === "tick") {
         dispatch(incTime10());
-      }, 10);
-    } else if (interval != null) {
-      clearInterval(interval);
-    }
+      }
+    };
+    timerWorker.postMessage("start");
+  };
+
+  useEffect(() => {
+    // Begin timer
+    if (isActive && !isPaused) {
+      startTimerWorker();
+    } else if (timerWorker != null) timerWorker.terminate();
 
     return () => {
-      if (interval != null) {
-        clearInterval(interval);
-      }
+      if (timerWorker != null) timerWorker.terminate();
     };
   }, [isActive, isPaused]);
 
