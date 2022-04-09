@@ -16,9 +16,12 @@ export const entriesSlice = createSlice({
     addEntry: (state, action: PayloadAction<EntryProps>): void => {
       state.list = [...state.list, action.payload];
     },
+    clearEntries: (state): void => {
+      state.list = [];
+    },
   },
 });
 
-export const { addEntry } = entriesSlice.actions;
+export const { addEntry, clearEntries } = entriesSlice.actions;
 
 export default entriesSlice.reducer;

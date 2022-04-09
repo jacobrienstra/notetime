@@ -1,4 +1,4 @@
-import mainReducer from "./main";
+import timerReducer from "./timer";
 import entriesReducer from "./entries";
 
-export { entriesReducer, mainReducer };
+export { entriesReducer, timerReducer };

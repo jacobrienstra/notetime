@@ -14,3 +14,37 @@ div {
 body {
   user-select: none;
 }
+
+button {
+  display: inline-flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem 2rem;
+  color: #000;
+  font-size: inherit;
+  font-family: sans-serif;
+  text-align: center;
+  text-decoration: none;
+  background: #e0e9f5;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  appearance: none;
+}
+
+button:hover,
+button:focus {
+  background: #9ec0e9;
+}
+
+button:focus {
+  outline: 1px solid #fff;
+  outline-offset: -4px;
+}
+
+button:active {
+  transform: scale(0.99);
+}

@@ -19,9 +19,6 @@ const textStyle = css`
 `;
 
 const entryStyle = css`
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-start; */
   background: var(--grey);
   padding: 6px 8px;
   border-radius: 4px;

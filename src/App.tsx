@@ -39,10 +39,8 @@ function App(): JSX.Element {
         />
       </div>
       <Timer />
-      <div>
-        <LapEntry />
-        <EntryList />
-      </div>
+      <LapEntry />
+      <EntryList />
     </div>
   );
 }

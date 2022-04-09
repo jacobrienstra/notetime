@@ -1,12 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPause,
-  faPlay,
-  faStop,
-  faUndo,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPause, faPlay, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
@@ -20,7 +15,7 @@ import {
   stop,
   resetTime,
   resetLapTime,
-} from "../redux/reducers/main";
+} from "../redux/reducers/timer";
 
 const timerStyle = css`
   display: flex;
@@ -44,7 +39,6 @@ const buttonStyle = css`
     cursor: pointer;
     margin: 4px;
     border-radius: 50%;
-    border: 1px solid var(--blue);
     padding: 0;
   }
 `;
@@ -63,9 +57,9 @@ const stopButton = css`
 function Timer(): JSX.Element {
   const dispatch = useDispatch();
 
-  const isActive = useSelector((state: RootState) => state.main.isActive);
-  const isPaused = useSelector((state: RootState) => state.main.isPaused);
-  const time = useSelector((state: RootState) => state.main.time);
+  const isActive = useSelector((state: RootState) => state.timer.isActive);
+  const isPaused = useSelector((state: RootState) => state.timer.isPaused);
+  const time = useSelector((state: RootState) => state.timer.time);
 
   let timerWorker: Worker;
 

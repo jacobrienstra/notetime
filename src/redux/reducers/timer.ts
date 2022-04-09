@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface MainSliceState {
+interface TimerSliceState {
   time: number;
   isActive: boolean;
   isPaused: boolean;
@@ -9,7 +9,7 @@ interface MainSliceState {
   text: string;
 }
 
-export const mainSlice = createSlice({
+export const timerSlice = createSlice({
   name: "game",
   initialState: {
     time: 0,
@@ -17,7 +17,7 @@ export const mainSlice = createSlice({
     isPaused: false,
     lapTime: 0,
     text: "",
-  } as MainSliceState,
+  } as TimerSliceState,
   reducers: {
     incTime10: (state): void => {
       state.time += 10;
@@ -65,6 +65,6 @@ export const {
   unpause,
   setText,
   resetText,
-} = mainSlice.actions;
+} = timerSlice.actions;
 
-export default mainSlice.reducer;
+export default timerSlice.reducer;
