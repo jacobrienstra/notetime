@@ -25,7 +25,6 @@ const timerStyle = css`
 
 const timerDisplayStyle = css`
   font-size: 56px;
-  color: var(--red);
   font-family: monospace;
 `;
 
@@ -40,6 +39,7 @@ const buttonStyle = css`
     margin: 4px;
     border-radius: 50%;
     padding: 0;
+    transition-property: border-color;
   }
 `;
 
@@ -51,7 +51,7 @@ const playButton = (isActive: boolean, isPaused: boolean) => css`
 `;
 
 const stopButton = css`
-  color: var(--red);
+  color: var(--red-600);
 `;
 
 function Timer(): JSX.Element {

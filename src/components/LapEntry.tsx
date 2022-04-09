@@ -19,7 +19,7 @@ const textEntryWrapper = css`
   flex-direction: column;
   align-items: center;
   align-content: center;
-  margin: 24px 0;
+  margin: 16px 0;
 `;
 
 const textEntry = css`

@@ -16,16 +16,26 @@ const entriesStyle = css`
   flex-direction: column;
   align-content: stretch;
   align-items: stretch;
-  width: 400px;
+  max-width: 500px;
+  min-width: 100%;
+  gap: 8px;
+`;
+
+const entriesSection = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 `;
 
 const buttonWrapper = css`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 30px;
   width: 100%;
-  margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 14px;
 
   button {
     display: inline-block;
@@ -33,6 +43,26 @@ const buttonWrapper = css`
 
   svg {
     margin-right: 0.5em;
+  }
+`;
+
+// const copyButton = css`
+//   border-color: var(--cyan-600);
+
+//   :hover {
+//     border-color: var(--cyan-700);
+//   }
+//   :active {
+//     border-color: var(--cyan-900);
+//   }
+// `;
+
+const clearButton = css`
+  :hover {
+    border-color: var(--red-500);
+  }
+  :active {
+    border-color: var(--red-800);
   }
 `;
 
@@ -52,19 +82,19 @@ function EntryList(): JSX.Element {
   };
 
   return (
-    <div>
-      {entries.length > 0 && (
-        <div css={buttonWrapper}>
-          <button type="button" onClick={copy}>
-            <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
-            Copy Entries
-          </button>
-          <button type="button" onClick={clear}>
-            <FontAwesomeIcon icon={faTrashCan as IconProp} size="1x" />
-            Clear Entries
-          </button>
-        </div>
-      )}
+    <div css={entriesSection}>
+      {/* {entries.length > 0 && ( */}
+      <div css={buttonWrapper}>
+        <button type="button" onClick={copy}>
+          <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
+          Copy Entries
+        </button>
+        <button type="button" onClick={clear} css={clearButton}>
+          <FontAwesomeIcon icon={faTrashCan as IconProp} size="1x" />
+          Clear Entries
+        </button>
+      </div>
+
       <div className="entries" css={entriesStyle}>
         {entries.map((e) => (
           <Entry {...e} key={e.key} />

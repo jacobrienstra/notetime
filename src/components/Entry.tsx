@@ -11,18 +11,17 @@ const timeStringStyle = css`
 `;
 
 const textStyle = css`
-  color: black;
   font-family: serif;
   font-size: 18px;
-  padding: 6px 0px;
+  line-height: 1.3;
+  padding: 8px 0px;
   z-index: 100;
 `;
 
 const entryStyle = css`
-  background: var(--grey);
-  padding: 6px 8px;
+  background: var(--slate-200);
+  padding: 8px 8px;
   border-radius: 4px;
-  margin: 4px 0;
   width: 100%;
   cursor: text;
   user-select: text;
