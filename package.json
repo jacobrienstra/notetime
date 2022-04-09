@@ -15,7 +15,6 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "customize-cra": "^1.0.0",
-    "emotion": "^11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",

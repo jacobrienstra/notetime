@@ -45,11 +45,15 @@ const buttonStyle = css`
     margin: 4px;
     border-radius: 50%;
     border: 1px solid var(--blue);
+    padding: 0;
   }
 `;
 
-const playButton = css`
-  color: var(--green);
+const playButton = (isActive: boolean, isPaused: boolean) => css`
+  && {
+    color: var(--green);
+    padding-left: ${!isActive || isPaused ? "4px" : "0px"};
+  }
 `;
 
 const stopButton = css`
@@ -113,7 +117,11 @@ function Timer(): JSX.Element {
         {timeString(time)}
       </div>
       <div className="buttons" css={buttonStyle}>
-        <button type="button" onClick={handleStartPause} css={playButton}>
+        <button
+          type="button"
+          onClick={handleStartPause}
+          css={playButton(isActive, isPaused)}
+        >
           <FontAwesomeIcon
             icon={
               isActive && !isPaused
