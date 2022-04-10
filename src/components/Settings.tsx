@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
@@ -26,30 +25,37 @@ const sidebarStyle = css`
   overflow-x: hidden;
   box-sizing: border-box;
   font-family: monospace;
-  background: transparent;
-  transition: all 0.5s ease-in-out 0s;
+  background: rgba(256, 256, 256, 0);
   transform: translateX(
     calc(-100% + var(--logo-width) + var(--logo-margin) * 2)
   );
-`;
+  transition: transform 0.5s ease-in-out 0s,
+    background-color 0.2s ease-in-out 0.3s;
 
-const sidebarOpen = css`
-  transform: translateX(0);
-  background: rgba(256, 256, 256, 1);
+  &.open {
+    transform: translateX(0);
+    background: rgba(256, 256, 256, 1);
+    transition: background-color 0.1s ease-in-out 0s,
+      transform 0.5s ease-in-out 0s;
+  }
 `;
 
 const logo = css`
   width: var(--logo-width);
-  &:hover {
-    transform: scale(1.1);
-    /* content: url(${process.env.PUBLIC_URL}/logo192shadow.png); */
-  }
 `;
 
 const logoWrap = css`
   align-self: flex-end;
-  /* margin: var(--logo-margin); */
   cursor: pointer;
+  transform: scale(1);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
 `;
 
 const headerSection = css`
@@ -61,12 +67,18 @@ const headerSection = css`
   padding: 10px var(--logo-margin);
 `;
 
-const settingsStyle = css`
+const settingsSection = css`
   height: 100%;
   padding: 6px 24px 24px 24px;
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
+  transition: opacity 0.5s ease-in-out 0s;
+  opacity: 0;
+
+  .open > & {
+    opacity: 1;
+  }
 `;
 
 const header = css`
@@ -112,14 +124,16 @@ const overlay = css`
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: rgba(0, 0, 0, 0);
-  transition: all 0.5s ease-in-out 0s;
+  background: rgba(0, 0, 0);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out 0s, visibility 0s 0.5s;
   visibility: hidden;
-`;
 
-const overlayOpen = css`
-  visibility: visible;
-  background: rgba(0, 0, 0, 0.5);
+  &.open {
+    visibility: visible;
+    opacity: 0.5;
+    transition: visibility 0s 0s, opacity 0.5s ease-in-out 0s;
+  }
 `;
 
 function Settings(): JSX.Element {
@@ -148,11 +162,11 @@ function Settings(): JSX.Element {
 
   return (
     <>
-      <div css={[overlay, isOpen && overlayOpen]} />
+      <div css={[overlay]} className={`${isOpen && "open"}`} />
       <aside
         ref={sideBarRef}
-        className="settings"
-        css={[sidebarStyle, isOpen && sidebarOpen]}
+        css={[sidebarStyle]}
+        className={`${isOpen && "open"}`}
       >
         <div css={headerSection}>
           <div css={header}>Settings</div>
@@ -164,7 +178,7 @@ function Settings(): JSX.Element {
             />
           </div>
         </div>
-        <div css={[settingsStyle]}>
+        <div css={settingsSection}>
           <div css={option}>
             <div css={optionTitle}>Entry Order</div>
             <div css={optionAnswers}>
