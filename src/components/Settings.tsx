@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
 import { RootState } from "../redux/store";
-import { toggle, setOrderReverse } from "../redux/reducers/settings";
+import { toggle, setOrderReverse, close } from "../redux/reducers/settings";
 
 const sidebarStyle = css`
   --logo-width: 50px;
@@ -21,10 +22,11 @@ const sidebarStyle = css`
   z-index: 10;
   top: 0;
   left: 0;
+  border-radius: 0 4px 4px 0;
   overflow-x: hidden;
   box-sizing: border-box;
   font-family: monospace;
-  background: rgba(256, 256, 256, 0);
+  background: transparent;
   transition: all 0.5s ease-in-out 0s;
   transform: translateX(
     calc(-100% + var(--logo-width) + var(--logo-margin) * 2)
@@ -56,12 +58,12 @@ const headerSection = css`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: var(--logo-margin);
+  padding: 10px var(--logo-margin);
 `;
 
 const settingsStyle = css`
   height: 100%;
-  padding: 24px;
+  padding: 6px 24px 24px 24px;
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
@@ -69,7 +71,7 @@ const settingsStyle = css`
 
 const header = css`
   font-size: 42px;
-  margin: 0 36px 0 6px;
+  margin: -5px 30px 0 2px;
 `;
 
 const option = css`
@@ -89,16 +91,35 @@ const optionAnswers = css`
   display: flex;
   flex-direction: column;
   transition: all 0.5s;
-  margin-left: 24px;
+  margin-left: 6px;
 
   & .checkWrap {
     cursor: pointer;
     margin: 2px 0;
+    padding: 6px;
+    border-bottom: 1px solid var(--slate-200);
 
     & svg {
-      margin-right: 12px;
+      margin-left: 12px;
     }
   }
+`;
+
+const overlay = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0);
+  transition: all 0.5s ease-in-out 0s;
+  visibility: hidden;
+`;
+
+const overlayOpen = css`
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 function Settings(): JSX.Element {
@@ -108,54 +129,68 @@ function Settings(): JSX.Element {
     (state: RootState) => state.settings.reverseOrder
   );
 
+  const sideBarRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
+      if (isOpen && !sideBarRef.current?.contains(e.target as Element)) {
+        dispatch(close());
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <aside className="settings" css={[sidebarStyle, isOpen && sidebarOpen]}>
-      <div css={headerSection}>
-        <div css={header}>Settings</div>
-        <div css={logoWrap} onClick={() => dispatch(toggle())}>
-          <img
-            css={logo}
-            src={`${process.env.PUBLIC_URL}/logo192.png`}
-            alt="logo"
-          />
+    <>
+      <div css={[overlay, isOpen && overlayOpen]} />
+      <aside
+        ref={sideBarRef}
+        className="settings"
+        css={[sidebarStyle, isOpen && sidebarOpen]}
+      >
+        <div css={headerSection}>
+          <div css={header}>Settings</div>
+          <div css={logoWrap} onClick={() => dispatch(toggle())}>
+            <img
+              css={logo}
+              src={`${process.env.PUBLIC_URL}/logo192.png`}
+              alt="logo"
+            />
+          </div>
         </div>
-      </div>
-      <div css={[settingsStyle]}>
-        <div css={option}>
-          <div css={optionTitle}>Entry Order</div>
-          <div css={optionAnswers}>
-            <div
-              className="checkWrap"
-              onClick={() => dispatch(setOrderReverse(false))}
-            >
-              <FontAwesomeIcon
-                icon={
-                  reverseOrder
-                    ? (faSquare as IconProp)
-                    : (faSquareCheck as IconProp)
-                }
-                size="1x"
-              />
-              Normal
-            </div>
-            <div
-              className="checkWrap"
-              onClick={() => dispatch(setOrderReverse(true))}
-            >
-              <FontAwesomeIcon
-                icon={
-                  reverseOrder
-                    ? (faSquareCheck as IconProp)
-                    : (faSquare as IconProp)
-                }
-                size="1x"
-              />
-              Reverse
+        <div css={[settingsStyle]}>
+          <div css={option}>
+            <div css={optionTitle}>Entry Order</div>
+            <div css={optionAnswers}>
+              <div
+                className="checkWrap"
+                onClick={() => dispatch(setOrderReverse(false))}
+              >
+                Normal
+                {reverseOrder ? null : (
+                  <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                )}
+              </div>
+              <div
+                className="checkWrap"
+                onClick={() => dispatch(setOrderReverse(true))}
+              >
+                Reverse
+                {reverseOrder ? (
+                  <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
