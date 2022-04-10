@@ -8,7 +8,7 @@ interface EntriesSliceState {
 }
 
 export const entriesSlice = createSlice({
-  name: "game",
+  name: "entries",
   initialState: {
     list: [],
   } as EntriesSliceState,

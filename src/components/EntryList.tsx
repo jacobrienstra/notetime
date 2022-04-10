@@ -11,22 +11,22 @@ import { clearEntries } from "../redux/reducers/entries";
 
 import Entry from "./Entry";
 
-const entriesStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-  align-items: stretch;
-  max-width: 500px;
-  min-width: 100%;
-  gap: 8px;
-`;
-
 const entriesSection = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+`;
+
+const entriesList = (reverseOrder: boolean) => css`
+  display: flex;
+  flex-direction: ${reverseOrder ? "column-reverse" : "column"};
+  align-content: stretch;
+  align-items: stretch;
+  max-width: 500px;
+  min-width: 100%;
+  gap: 8px;
 `;
 
 const buttonWrapper = css`
@@ -46,17 +46,6 @@ const buttonWrapper = css`
   }
 `;
 
-// const copyButton = css`
-//   border-color: var(--cyan-600);
-
-//   :hover {
-//     border-color: var(--cyan-700);
-//   }
-//   :active {
-//     border-color: var(--cyan-900);
-//   }
-// `;
-
 const clearButton = css`
   :hover {
     border-color: var(--red-500);
@@ -69,6 +58,9 @@ const clearButton = css`
 function EntryList(): JSX.Element {
   const dispatch = useDispatch();
   const entries = useSelector((state: RootState) => state.entries.list);
+  const reverseOrder = useSelector(
+    (state: RootState) => state.settings.reverseOrder
+  );
 
   const clear = () => {
     dispatch(clearEntries());
@@ -83,7 +75,6 @@ function EntryList(): JSX.Element {
 
   return (
     <div css={entriesSection}>
-      {/* {entries.length > 0 && ( */}
       <div css={buttonWrapper}>
         <button type="button" onClick={copy}>
           <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
@@ -95,7 +86,7 @@ function EntryList(): JSX.Element {
         </button>
       </div>
 
-      <div className="entries" css={entriesStyle}>
+      <div className="entries" css={entriesList(reverseOrder)}>
         {entries.map((e) => (
           <Entry {...e} key={e.key} />
         ))}

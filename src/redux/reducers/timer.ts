@@ -10,7 +10,7 @@ interface TimerSliceState {
 }
 
 export const timerSlice = createSlice({
-  name: "game",
+  name: "timer",
   initialState: {
     time: 0,
     isActive: false,
