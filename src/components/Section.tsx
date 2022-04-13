@@ -3,7 +3,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 
 import { RootState } from "../redux/store";
 import { open, toggleSection } from "../redux/reducers/sidebar";
@@ -14,9 +14,10 @@ const sectionStyle = css`
   --header-font-size: 18px;
   width: 100%;
   background: white;
-  transition: flex 0.5s ease-in-out 0s;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
+  overflow: hidden;
+  flex: 1 0 auto;
 `;
 
 const header = css`
@@ -44,6 +45,13 @@ const content = css`
   font-size: 14px;
   max-width: fit-content;
   padding: 0;
+  overflow: hidden;
+  /* position: relative; */
+  display: none;
+
+  .expanded > & {
+    /* display: block; */
+  }
 `;
 
 const contentPadding = css`
@@ -79,7 +87,8 @@ const iconStyle = css`
 type SectionProps = {
   title: string;
   icon: IconProp;
-  content: string;
+  iconStyle?: SerializedStyles;
+  content: JSX.Element;
   index: number;
 };
 
@@ -99,7 +108,7 @@ function Section(props: SectionProps): JSX.Element {
   };
 
   return (
-    <section
+    <div
       css={[
         sectionStyle,
         css`
@@ -117,7 +126,11 @@ function Section(props: SectionProps): JSX.Element {
           <div css={title} className="fades">
             {props.title}
           </div>
-          <FontAwesomeIcon css={iconStyle} icon={props.icon} size="2x" />
+          <FontAwesomeIcon
+            css={[iconStyle, props.iconStyle]}
+            icon={props.icon}
+            size="2x"
+          />
         </div>
       </div>
       <Collapsible
@@ -128,7 +141,7 @@ function Section(props: SectionProps): JSX.Element {
           <div css={contentPadding}>{props.content}</div>
         </div>
       </Collapsible>
-    </section>
+    </div>
   );
 }
 

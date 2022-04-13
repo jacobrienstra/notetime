@@ -47,6 +47,7 @@ function Collapsible({
     isAppearing: boolean
   ): void => {
     el._parent = el.parentNode as (Node & ParentNode & HTMLElement) | null;
+    el.style.display = "block";
     el._initialStyle = {
       transition: el.style.transition,
       visibility: el.style.visibility,
@@ -102,7 +103,9 @@ function Collapsible({
     el.style.overflow = "hidden";
     el.style[sizeProperty] = `${el[offsetProperty]}px`;
     void el.offsetHeight; // force reflow
-
+    if (expandedParentClass && el._parent) {
+      el._parent.classList.remove(expandedParentClass);
+    }
     requestAnimationFrame(() => {
       el.style[sizeProperty] = "0";
     });
@@ -112,6 +115,7 @@ function Collapsible({
     if (expandedParentClass && el._parent) {
       el._parent.classList.remove(expandedParentClass);
     }
+    el.style.display = "none";
     resetStyles(el);
   };
 
@@ -125,7 +129,7 @@ function Collapsible({
       onExit={onExitDefault}
       onExiting={onExitingDefault}
       onExited={onExitedDefault}
-      unmountOnExit
+      unmountOnExit={false}
       {...rest}
     >
       {children}

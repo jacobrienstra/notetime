@@ -3,20 +3,24 @@
     "stylelint-config-standard",
     "stylelint-config-styled-components",
     "stylelint-order",
-    "stylelint-config-rational-order",
-    "stylelint-config-prettier"
+    "stylelint-config-prettier",
+    "stylelint-config-rational-order"
   ],
   "plugins": [
     "stylelint-prettier",
     "stylelint-order",
     "stylelint-config-rational-order/plugin"
   ],
+  "overrides": [
+    {
+      "files": ["**/*.{js,ts,jsx,tsx}"],
+      "customSyntax": "postcss-jsx"
+    }
+  ],
   "rules": {
-    "custom-property-empty-line-before": null,
-    "declaration-empty-line-before": ["never"],
     "value-keyword-case": null,
+    "declaration-empty-line-before": null,
     "selector-max-compound-selectors": null,
-    "order/properties-order": [[], { "severity": "warning" }],
     "plugin/rational-order": [
       true,
       {

@@ -28,9 +28,7 @@
   --slate-900: #0f172a;
 }
 
-div,
-section,
-aside {
+* {
   box-sizing: border-box;
 
   /* overflow: hidden; */
@@ -38,7 +36,20 @@ aside {
 
 body {
   color: var(--slate-900);
+  font-size: 14px;
   user-select: none;
+}
+
+h1 {
+  font-size: 42px;
+}
+
+h4 {
+  margin: 6px 0;
+  color: var(--cyan-800);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 button {

@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { faCircleQuestion, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
 import { RootState } from "../redux/store";
-import { toggle, close } from "../redux/reducers/sidebar";
+import { close, closeAllSections, toggle } from "../redux/reducers/sidebar";
+import Readme from "../README.md";
 
 import Settings from "./Settings";
 import Section from "./Section";
@@ -17,14 +19,15 @@ const sidebarStyle = css`
   --logo-v-margin: 10px;
   position: fixed;
   display: flex;
+  border-radius: 0 4px 4px 0;
   flex-direction: column;
-  align-items: flex-start;
-  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  left: 0;
   z-index: 10;
   top: 0;
-  left: 0;
-  border-radius: 0 4px 4px 0;
   overflow-x: hidden;
+  overflow-y: hidden;
   box-sizing: border-box;
   font-family: monospace;
   background: rgba(256, 256, 256, 0);
@@ -45,9 +48,10 @@ const sidebarStyle = css`
 const sidebarContent = css`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  /* justify-content: flex-start; */
   width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
 
   & .fades {
     transition: opacity 0.5s ease-in-out 0s;
@@ -87,8 +91,8 @@ const headerSection = css`
 `;
 
 const header = css`
-  font-size: 42px;
   margin: -5px 30px 0 2px;
+  cursor: pointer;
 `;
 
 const overlay = css`
@@ -115,6 +119,14 @@ function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);
 
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    fetch(Readme)
+      .then((res) => res.text())
+      .then((text) => setContent(text));
+  }, []);
+
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -137,7 +149,10 @@ function Sidebar(): JSX.Element {
       <div ref={overlayRef} css={[overlay]} className={`${isOpen && "open"}`} />
       <aside css={[sidebarStyle]} className={`${isOpen && "open"}`}>
         <div css={headerSection}>
-          <div css={header}>Settings</div>
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+          <h1 css={header} onClick={() => dispatch(closeAllSections())}>
+            Settings
+          </h1>
           <div css={logoWrap} onClick={() => dispatch(toggle())}>
             <img
               css={logo}
@@ -151,13 +166,33 @@ function Sidebar(): JSX.Element {
           <Section
             index={1}
             icon={faCircleQuestion as IconProp}
-            content="Start typing in the textarea and the current time will be marked. Hitting enter creates an entry."
+            content={<ReactMarkdown>{content}</ReactMarkdown>}
             title="Help"
           />
           <Section
             index={2}
             icon={faHeart as IconProp}
-            content="Thanks so much or whatever"
+            iconStyle={css`
+              color: var(--red-600);
+            `}
+            content={
+              <>
+                Thanks so much or whatever
+                <iframe
+                  id="kofiframe"
+                  src="https://ko-fi.com/jacobrienstra/?hidefeed=true&widget=true&embed=true&preview=true"
+                  style={{
+                    border: "none",
+                    width: "100%",
+                    padding: "4px",
+                    // height: "100%",
+                    background: "#f9f9f9",
+                  }}
+                  height="712"
+                  title="jacobrienstra"
+                />
+              </>
+            }
             title="Thanks"
           />
         </div>

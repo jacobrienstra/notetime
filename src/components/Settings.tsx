@@ -9,32 +9,29 @@ import { RootState } from "../redux/store";
 import { setOrderReverse } from "../redux/reducers/settings";
 
 const settingsSection = css`
-  height: 100%;
-  padding: 6px 24px 24px 24px;
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
+  min-height: 0px;
+  flex: 1 1 0px;
+  margin-bottom: auto;
+`;
+
+const paddingWrap = css`
+  padding: 6px 24px 24px 24px;
 `;
 
 const option = css`
   margin-bottom: 30px;
 `;
 
-const optionTitle = css`
-  font-size: 16px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  font-weight: 700;
-  color: var(--cyan-800);
-`;
-
 const optionAnswers = css`
   font-size: 18px;
   display: flex;
-  flex-direction: column;
+
   transition: all 0.5s;
   margin-left: 6px;
-
+  flex-direction: column;
   & .checkWrap {
     cursor: pointer;
     margin: 2px 0;
@@ -55,26 +52,28 @@ function Settings(): JSX.Element {
 
   return (
     <section css={settingsSection} className="fades">
-      <div css={option}>
-        <div css={optionTitle}>Entry Order</div>
-        <div css={optionAnswers}>
-          <div
-            className="checkWrap"
-            onClick={() => dispatch(setOrderReverse(false))}
-          >
-            Normal
-            {reverseOrder ? null : (
-              <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
-            )}
-          </div>
-          <div
-            className="checkWrap"
-            onClick={() => dispatch(setOrderReverse(true))}
-          >
-            Reverse
-            {reverseOrder ? (
-              <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
-            ) : null}
+      <div css={paddingWrap}>
+        <div css={option}>
+          <h4>Entry Order</h4>
+          <div css={optionAnswers}>
+            <div
+              className="checkWrap"
+              onClick={() => dispatch(setOrderReverse(false))}
+            >
+              Normal
+              {reverseOrder ? null : (
+                <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+              )}
+            </div>
+            <div
+              className="checkWrap"
+              onClick={() => dispatch(setOrderReverse(true))}
+            >
+              Reverse
+              {reverseOrder ? (
+                <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
