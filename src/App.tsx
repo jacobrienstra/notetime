@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/react";
 
 import Timer from "./components/Timer";
-import Settings from "./components/Settings";
+import Sidebar from "./components/Sidebar";
 import LapEntry from "./components/LapEntry";
 import EntryList from "./components/EntryList";
 
@@ -16,7 +16,7 @@ const rootStyle = css`
 function App(): JSX.Element {
   return (
     <div className="app" css={rootStyle}>
-      <Settings />
+      <Sidebar />
       <Timer />
       <LapEntry />
       <EntryList />
