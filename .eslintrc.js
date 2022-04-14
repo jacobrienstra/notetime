@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:import/typescript",
+    "plugin:react/jsx-runtime",
     "prettier",
   ],
   plugins: ["@typescript-eslint", "react", "import", "react-hooks", "prettier"],
@@ -86,6 +87,7 @@ module.exports = {
     "react/require-default-props": "off",
     "react/destructuring-assignment": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/jsx-fragments": ["error", "element"],
     "react/default-props-match-prop-types": [
       "error",
       { allowRequiredDefaults: true },

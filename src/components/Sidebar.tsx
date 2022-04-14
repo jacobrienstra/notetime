@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { faCircleQuestion, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
@@ -145,7 +144,7 @@ function Sidebar(): JSX.Element {
   }, [isOpen]);
 
   return (
-    <>
+    <Fragment>
       <div ref={overlayRef} css={[overlay]} className={`${isOpen && "open"}`} />
       <aside css={[sidebarStyle]} className={`${isOpen && "open"}`}>
         <div css={headerSection}>
@@ -176,7 +175,7 @@ function Sidebar(): JSX.Element {
               color: var(--red-600);
             `}
             content={
-              <>
+              <Fragment>
                 Thanks so much or whatever
                 <iframe
                   id="kofiframe"
@@ -191,13 +190,13 @@ function Sidebar(): JSX.Element {
                   height="712"
                   title="jacobrienstra"
                 />
-              </>
+              </Fragment>
             }
             title="Thanks"
           />
         </div>
       </aside>
-    </>
+    </Fragment>
   );
 }
 
