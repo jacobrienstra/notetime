@@ -13,10 +13,10 @@ const sectionStyle = css`
   --header-font-size: 18px;
   width: 100%;
   background: white;
-  /* display: flex;
-  flex-direction: column; */
   overflow: hidden;
-  flex: 1 0 auto;
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const header = css`
@@ -44,12 +44,10 @@ const content = css`
   font-size: 14px;
   max-width: fit-content;
   padding: 0;
-  overflow: hidden;
-  /* position: relative; */
-  display: none;
+  overflow: scroll;
+  flex: 0 1 auto;
 
   .expanded > & {
-    /* display: block; */
   }
 `;
 
@@ -107,7 +105,7 @@ function Section(props: SectionProps): JSX.Element {
   };
 
   return (
-    <div
+    <section
       css={[
         sectionStyle,
         css`
@@ -140,7 +138,7 @@ function Section(props: SectionProps): JSX.Element {
           <div css={contentPadding}>{props.content}</div>
         </div>
       </Collapsible>
-    </div>
+    </section>
   );
 }
 

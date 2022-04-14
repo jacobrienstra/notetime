@@ -11,9 +11,8 @@ const settingsSection = css`
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
-  min-height: 0px;
   flex: 1 1 0px;
-  margin-bottom: auto;
+  min-height: 0px;
 `;
 
 const paddingWrap = css`

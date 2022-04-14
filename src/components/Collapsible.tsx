@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import type { TransitionProps } from "react-transition-group/Transition";
 import { Transition } from "react-transition-group";
-import * as React from "react";
 
 interface HTMLExpandElement extends HTMLElement {
   _parent?: (Node & ParentNode & HTMLElement) | null;
@@ -47,7 +46,7 @@ function Collapsible({
     isAppearing: boolean
   ): void => {
     el._parent = el.parentNode as (Node & ParentNode & HTMLElement) | null;
-    el.style.display = "block";
+    // el.style.display = "block";
     el._initialStyle = {
       transition: el.style.transition,
       visibility: el.style.visibility,
@@ -115,7 +114,7 @@ function Collapsible({
     if (expandedParentClass && el._parent) {
       el._parent.classList.remove(expandedParentClass);
     }
-    el.style.display = "none";
+    // el.style.display = "none";
     resetStyles(el);
   };
 
@@ -129,7 +128,7 @@ function Collapsible({
       onExit={onExitDefault}
       onExiting={onExitingDefault}
       onExited={onExitedDefault}
-      unmountOnExit={false}
+      unmountOnExit
       {...rest}
     >
       {children}

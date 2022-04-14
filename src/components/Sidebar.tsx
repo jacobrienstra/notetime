@@ -16,12 +16,13 @@ const sidebarStyle = css`
   --logo-width: 50px;
   --logo-h-margin: 12px;
   --logo-v-margin: 10px;
-  position: fixed;
   display: flex;
-  border-radius: 0 4px 4px 0;
   flex-direction: column;
+  position: fixed;
+  border-radius: 0 4px 4px 0;
   min-height: 100%;
   max-height: 100%;
+  height: 100%;
   left: 0;
   z-index: 10;
   top: 0;
@@ -45,11 +46,10 @@ const sidebarStyle = css`
 `;
 
 const sidebarContent = css`
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start; */
   width: 100%;
-  flex-grow: 1;
   overflow: hidden;
 
   & .fades {
@@ -177,19 +177,17 @@ function Sidebar(): JSX.Element {
             content={
               <Fragment>
                 Thanks so much or whatever
-                <iframe
-                  id="kofiframe"
-                  src="https://ko-fi.com/jacobrienstra/?hidefeed=true&widget=true&embed=true&preview=true"
-                  style={{
-                    border: "none",
-                    width: "100%",
-                    padding: "4px",
-                    // height: "100%",
-                    background: "#f9f9f9",
-                  }}
-                  height="712"
-                  title="jacobrienstra"
-                />
+                <a
+                  href="https://ko-fi.com/H2H0BZNEN"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    height="36"
+                    src="https://cdn.ko-fi.com/cdn/kofi5.png?v=3"
+                    alt="Give me money"
+                  />
+                </a>
               </Fragment>
             }
             title="Thanks"
