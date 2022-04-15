@@ -2,21 +2,7 @@ import { css } from "@emotion/react";
 
 import timeString from "../util";
 
-const timeStringStyle = css`
-  color: var(--blue);
-  font-size: 18px;
-  font-family: monospace;
-`;
-
-const textStyle = css`
-  padding: 8px 0;
-
-  font-size: 18px;
-  font-family: serif;
-  line-height: 1.3;
-`;
-
-const entryStyle = css`
+const entryRoot = css`
   width: 100%;
   padding: 8px;
 
@@ -25,6 +11,19 @@ const entryStyle = css`
   cursor: text;
 
   user-select: all;
+
+  .entry-text {
+    padding: 8px 0;
+
+    font-size: 18px;
+    font-family: serif;
+    line-height: 1.3;
+  }
+
+  .timestamp {
+    color: var(--blue);
+    font-size: 18px;
+  }
 `;
 
 export type EntryProps = {
@@ -35,9 +34,9 @@ export type EntryProps = {
 
 function Entry({ time, text }: EntryProps): JSX.Element {
   return (
-    <li css={entryStyle}>
-      <span css={timeStringStyle}>[{timeString(time)}] - </span>
-      <span css={textStyle}>{text}</span>
+    <li css={entryRoot}>
+      <span className="timestamp">[{timeString(time)}] - </span>
+      <span className="entry-text">{text}</span>
     </li>
   );
 }

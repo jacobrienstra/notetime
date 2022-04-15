@@ -7,13 +7,9 @@ const kofiButtonWrap = css`
   width: 100%;
 `;
 
-const thanks = css`
-  font-size: 18px;
-`;
-
 function Thanks(): JSX.Element {
   return (
-    <div css={thanks}>
+    <div>
       <h2>Thanks </h2>
       <p>
         Let me know if{" "}

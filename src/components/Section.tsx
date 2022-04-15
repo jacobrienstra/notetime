@@ -9,88 +9,88 @@ import { css, SerializedStyles } from "@emotion/react";
 import { RootState } from "../redux/store";
 import { open, toggleSection } from "../redux/reducers/sidebar";
 
-const sectionStyle = css`
+const sectionRoot = css`
+  // Define header font size so calculate the height of collapsed section (for animation reasons, and so content can stay on page)
   --header-font-size: 18px;
   width: 100%;
 
-  height: calc(((var(--header-font-size) + var(--logo-v-margin)) * 2));
+  height: calc(((var(--header-font-size) + var(--logo-ver-margin)) * 2));
   overflow: visible;
 
   background: white;
 
   &.expanded {
     height: auto;
+
+    .carat {
+      transform: rotate(90deg);
+    }
   }
-`;
 
-const header = css`
-  z-index: 3;
+  header {
+    z-index: 3;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: 100%;
-  padding: var(--logo-v-margin) var(--logo-h-margin);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    padding: var(--logo-ver-margin) var(--logo-hor-margin);
 
-  font-size: var(--header-font-size);
+    font-size: var(--header-font-size);
 
-  background: white;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 1px 0;
-  border-collapse: collapse;
-  cursor: pointer;
+    background: white;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 0;
+    border-collapse: collapse;
+    cursor: pointer;
 
-  transition: border-color 0.5s ease-in-out 0s;
+    transition: border-color 0.5s ease-in-out 0s;
 
-  .open & {
-    border-color: var(--slate-200);
+    .open & {
+      border-color: var(--slate-200);
+    }
+
+    .title-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+
+      .title {
+        margin-right: var(--logo-hor-margin);
+      }
+
+      svg {
+        padding-right: calc((var(--logo-width) / 2) - var(--header-font-size));
+      }
+    }
   }
-`;
 
-const content = css`
-  z-index: 1;
+  .carat {
+    justify-self: flex-start;
+    margin-left: 2px;
 
-  max-width: fit-content;
-  padding: 0;
-  overflow: hidden;
+    transition: transform 0.3s ease-in-out 0s;
 
-  font-size: 14px;
-
-  background: white;
-`;
-
-const contentPadding = css`
-  padding: var(--logo-v-margin) var(--logo-h-margin);
-`;
-
-const carat = css`
-  justify-self: flex-start;
-  margin-left: 2px;
-
-  transition: transform 0.2s ease-in-out 0s;
-
-  .expanded & {
-    transform: rotate(90deg);
+    will-change: transform;
   }
-`;
 
-const iconWrap = css`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  height: 100%;
-`;
+  .section-content {
+    z-index: 1;
 
-const title = css`
-  margin-right: var(--logo-h-margin);
-`;
+    max-width: fit-content;
+    padding: 0;
+    overflow: hidden;
 
-const iconStyle = css`
-  padding-right: calc((var(--logo-width) / 2) - var(--header-font-size));
+    font-size: 18px;
+
+    background: white;
+    padding: var(--logo-ver-margin) var(--logo-hor-margin);
+  }
 `;
 
 type SectionProps = {
@@ -122,35 +122,31 @@ function Section(props: SectionProps): JSX.Element {
       <section
         className={curSection === props.index ? "expanded" : ""}
         css={[
-          sectionStyle,
+          sectionRoot,
           css`
             z-index: ${props.index + 10};
           `,
         ]}
       >
         <Flipped inverseFlipId={`section-${props.index}`} scale>
-          <div css={header} onClick={handleClick}>
+          <header onClick={handleClick} role="button" tabIndex={0}>
             <FontAwesomeIcon
-              css={carat}
+              className="carat"
               icon={faAngleRight as IconProp}
               size="1x"
             />
-            <div css={iconWrap}>
-              <div css={title} className="fades">
-                {props.title}
-              </div>
+            <div className="title-wrapper">
+              <div className="title fades">{props.title}</div>
               <FontAwesomeIcon
-                css={[iconStyle, props.iconStyle]}
+                css={props.iconStyle}
                 icon={props.icon}
                 size="2x"
               />
             </div>
-          </div>
+          </header>
         </Flipped>
         <Flipped inverseFlipId={`section-${props.index}`} scale>
-          <div css={content} className="fades">
-            <div css={contentPadding}>{props.content}</div>
-          </div>
+          <div className="section-content fades">{props.content}</div>
         </Flipped>
       </section>
     </Flipped>

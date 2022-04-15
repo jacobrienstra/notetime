@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -17,45 +17,45 @@ import {
   resetLapTime,
 } from "../redux/reducers/timer";
 
-const timerStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const timerDisplay = css`
+  &.timer-display {
+    font-size: 56px;
+    font-family: monospace;
+  }
 `;
 
-const timerDisplayStyle = css`
-  font-size: 56px;
-  font-family: monospace;
-`;
+const timerControls = css`
+  &.timer-controls {
+    button {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      margin: 4px;
+      padding: 0;
 
-const buttonStyle = css`
-  button {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    margin: 4px;
-    padding: 0;
+      font-size: 18px;
+      font-family: sans-serif;
 
-    font-size: 18px;
-    font-family: sans-serif;
+      border-radius: 50%;
+      cursor: pointer;
 
-    border-radius: 50%;
-    cursor: pointer;
+      transition-property: border-color;
+    }
 
-    transition-property: border-color;
+    .reset-button {
+      color: var(--red-600);
+    }
+
+    .play-button {
+      color: var(--green);
+    }
   }
 `;
 
 const playButton = (isActive: boolean, isPaused: boolean) => css`
   && {
     padding-left: ${!isActive || isPaused ? "4px" : "0px"};
-
-    color: var(--green);
   }
-`;
-
-const stopButton = css`
-  color: var(--red-600);
 `;
 
 function Timer(): JSX.Element {
@@ -109,16 +109,19 @@ function Timer(): JSX.Element {
     dispatch(resetTime());
     dispatch(resetLapTime());
   };
+
   return (
-    <div className="timer" css={timerStyle}>
-      <div className="timerDisplay" css={timerDisplayStyle}>
+    <Fragment>
+      <div className="timer-display" css={timerDisplay}>
         {timeString(time)}
       </div>
-      <div className="buttons" css={buttonStyle}>
+      <div className="timer-controls" css={timerControls}>
         <button
           type="button"
           onClick={handleStartPause}
+          className="play-button"
           css={playButton(isActive, isPaused)}
+          title="Start/Pause"
         >
           <FontAwesomeIcon
             icon={
@@ -129,11 +132,16 @@ function Timer(): JSX.Element {
             size="2x"
           />
         </button>
-        <button type="button" onClick={handleReset} css={stopButton}>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="reset-button"
+          title="Reset"
+        >
           <FontAwesomeIcon icon={faUndo as IconProp} size="2x" />
         </button>
       </div>
-    </div>
+    </Fragment>
   );
 }
 

@@ -7,40 +7,40 @@ import { css } from "@emotion/react";
 import { RootState } from "../redux/store";
 import { setOrderReverse } from "../redux/reducers/settings";
 
-const settingsSection = css`
+const settingsRoot = css`
   flex: 1 1 0px;
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
   min-height: 0;
-`;
 
-const paddingWrap = css`
-  padding: 6px 24px 24px 24px;
-`;
+  .wrapper {
+    padding: 6px 24px 24px 24px;
 
-const option = css`
-  margin-bottom: 30px;
-`;
+    .setting {
+      margin-bottom: 30px;
 
-const optionAnswers = css`
-  display: flex;
-  flex-direction: column;
-  margin-left: 6px;
+      .setting-options {
+        display: flex;
+        flex-direction: column;
+        margin-left: 6px;
 
-  font-size: 18px;
+        font-size: 18px;
 
-  transition: all 0.5s;
+        transition: all 0.5s;
 
-  & .checkWrap {
-    margin: 2px 0;
-    padding: 6px;
+        .setting-option {
+          margin: 2px 0;
+          padding: 6px;
 
-    border-bottom: 1px solid var(--slate-200);
-    cursor: pointer;
+          border-bottom: 1px solid var(--slate-200);
+          cursor: pointer;
 
-    & svg {
-      margin-left: 12px;
+          svg {
+            margin-left: 12px;
+          }
+        }
+      }
     }
   }
 `;
@@ -52,13 +52,16 @@ function Settings(): JSX.Element {
   );
 
   return (
-    <section css={settingsSection} className="fades">
-      <div css={paddingWrap}>
-        <div css={option}>
+    <section css={settingsRoot} className="fades">
+      <div className="wrapper">
+        <div className="setting">
           <h4>Entry Order</h4>
-          <div css={optionAnswers}>
+          <div className="setting-options">
             <div
-              className="checkWrap"
+              role="option"
+              tabIndex={0}
+              className="setting-option"
+              aria-selected={!reverseOrder}
               onClick={() => dispatch(setOrderReverse(false))}
             >
               Normal
@@ -67,7 +70,10 @@ function Settings(): JSX.Element {
               )}
             </div>
             <div
-              className="checkWrap"
+              role="option"
+              tabIndex={0}
+              className="setting-option"
+              aria-selected={reverseOrder}
               onClick={() => dispatch(setOrderReverse(true))}
             >
               Reverse

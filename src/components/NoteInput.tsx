@@ -4,6 +4,7 @@ import {
   KeyboardEvent,
   ChangeEvent,
   ChangeEventHandler,
+  Fragment,
 } from "react";
 import { css } from "@emotion/react";
 
@@ -14,12 +15,12 @@ import { addEntry } from "../redux/reducers/entries";
 
 import { EntryProps } from "./Entry";
 
-const textEntryWrapper = css`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  margin: 16px 0;
+const timeStamp = css`
+  align-self: flex-start;
+
+  font-size: 24px;
+  font-family: monospace;
+  margin-bottom: 6px;
 `;
 
 const textEntry = css`
@@ -28,17 +29,22 @@ const textEntry = css`
   font-size: 18px;
   font-family: serif;
 
-  resize: none;
+  border-radius: 4px;
+  outline-offset: 0px;
+  border: 4px solid var(--slate-300);
+
+  resize: all;
+  will-change: border-color;
+
+  &:focus-visible {
+    border-color: var(--cyan-500);
+    outline-color: var(--cyan-500);
+    outline-style: hidden;
+    outline-width: 1px;
+  }
 `;
 
-const timeStamp = css`
-  align-self: flex-start;
-
-  font-size: 24px;
-  font-family: monospace;
-`;
-
-function LapEntry(): JSX.Element {
+function NoteInput(): JSX.Element {
   const dispatch = useDispatch();
   const time = useSelector((state: RootState) => state.timer.time);
   const lapTime = useSelector((state: RootState) => state.timer.lapTime);
@@ -74,8 +80,9 @@ function LapEntry(): JSX.Element {
   ) => {
     dispatch(setText(event.target.value));
   };
+
   return (
-    <div className="lapEntry" css={textEntryWrapper}>
+    <Fragment>
       <div css={timeStamp}>{timeString(lapTime)}</div>
       <textarea
         cols={36}
@@ -86,8 +93,8 @@ function LapEntry(): JSX.Element {
         onChange={handleChange}
         css={textEntry}
       />
-    </div>
+    </Fragment>
   );
 }
 
-export default LapEntry;
+export default NoteInput;

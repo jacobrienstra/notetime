@@ -2,24 +2,32 @@ import { css } from "@emotion/react";
 
 import Timer from "./components/Timer";
 import Sidebar from "./components/Sidebar";
-import LapEntry from "./components/LapEntry";
+import NoteInput from "./components/NoteInput";
 import EntryList from "./components/EntryList";
 
-const app = css`
+const bodyWrap = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0;
 `;
 
+const mainRoot = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 function App(): JSX.Element {
   return (
-    <main className="app" css={app}>
+    <div className="app" css={bodyWrap}>
       <Sidebar />
-      <Timer />
-      <LapEntry />
-      <EntryList />
-    </main>
+      <main css={mainRoot}>
+        <Timer />
+        <NoteInput />
+        <EntryList />
+      </main>
+    </div>
   );
 }
 
