@@ -40,8 +40,19 @@ body {
   user-select: none;
 }
 
+a,
+a:visited {
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 h1 {
   font-size: 42px;
+}
+
+h2 {
+  margin-block-start: 0;
 }
 
 h4 {
@@ -50,6 +61,13 @@ h4 {
   font-weight: 700;
   font-size: 16px;
   text-transform: uppercase;
+}
+
+h5 {
+  font-weight: normal;
+  font-size: 1.17em;
+  margin-block-end: 1em;
+  margin-block-start: 1em;
 }
 
 button {

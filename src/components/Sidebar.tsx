@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
+import { Flipper } from "react-flip-toolkit";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { faCircleQuestion, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -7,8 +8,9 @@ import { css } from "@emotion/react";
 
 import { RootState } from "../redux/store";
 import { close, closeAllSections, toggle } from "../redux/reducers/sidebar";
-import Readme from "../README.md";
+import Helpmd from "../help.md";
 
+import Thanks from "./Thanks";
 import Settings from "./Settings";
 import Section from "./Section";
 
@@ -118,12 +120,12 @@ function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);
 
-  const [content, setContent] = useState("");
+  const [help, setHelp] = useState("");
 
   useEffect(() => {
-    fetch(Readme)
+    fetch(Helpmd)
       .then((res) => res.text())
-      .then((text) => setContent(text));
+      .then((text) => setHelp(text));
   }, []);
 
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -160,12 +162,20 @@ function Sidebar(): JSX.Element {
             />
           </div>
         </div>
-        <div css={sidebarContent}>
+        <Flipper flipKey="sidebarSection" css={sidebarContent}>
           <Settings />
           <Section
             index={1}
             icon={faCircleQuestion as IconProp}
-            content={<ReactMarkdown>{content}</ReactMarkdown>}
+            content={
+              <ReactMarkdown
+                css={css`
+                  font-size: 18px;
+                `}
+              >
+                {help}
+              </ReactMarkdown>
+            }
             title="Help"
           />
           <Section
@@ -174,25 +184,10 @@ function Sidebar(): JSX.Element {
             iconStyle={css`
               color: var(--red-600);
             `}
-            content={
-              <Fragment>
-                Thanks so much or whatever
-                <a
-                  href="https://ko-fi.com/H2H0BZNEN"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    height="36"
-                    src="https://cdn.ko-fi.com/cdn/kofi5.png?v=3"
-                    alt="Give me money"
-                  />
-                </a>
-              </Fragment>
-            }
+            content={<Thanks />}
             title="Thanks"
           />
-        </div>
+        </Flipper>
       </aside>
     </Fragment>
   );

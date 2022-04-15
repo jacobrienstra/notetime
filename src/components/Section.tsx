@@ -7,8 +7,6 @@ import { css, SerializedStyles } from "@emotion/react";
 import { RootState } from "../redux/store";
 import { open, toggleSection } from "../redux/reducers/sidebar";
 
-import Collapsible from "./Collapsible";
-
 const sectionStyle = css`
   --header-font-size: 18px;
   width: 100%;
@@ -46,8 +44,10 @@ const content = css`
   padding: 0;
   overflow: scroll;
   flex: 0 1 auto;
+  display: none;
 
   .expanded > & {
+    display: block;
   }
 `;
 
@@ -106,6 +106,7 @@ function Section(props: SectionProps): JSX.Element {
 
   return (
     <section
+      className={curSection === props.index ? "expanded" : ""}
       css={[
         sectionStyle,
         css`
@@ -130,14 +131,9 @@ function Section(props: SectionProps): JSX.Element {
           />
         </div>
       </div>
-      <Collapsible
-        show={props.index === curSection}
-        expandedParentClass="expanded"
-      >
-        <div css={content} className="fades">
-          <div css={contentPadding}>{props.content}</div>
-        </div>
-      </Collapsible>
+      <div css={content} className="fades">
+        <div css={contentPadding}>{props.content}</div>
+      </div>
     </section>
   );
 }
