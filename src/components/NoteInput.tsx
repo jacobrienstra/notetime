@@ -49,6 +49,7 @@ function NoteInput(): JSX.Element {
   const time = useSelector((state: RootState) => state.timer.time);
   const lapTime = useSelector((state: RootState) => state.timer.lapTime);
   const text = useSelector((state: RootState) => state.timer.text);
+  const index = useSelector((state: RootState) => state.entries.list.length);
 
   const handleOnKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
     e: KeyboardEvent<HTMLTextAreaElement>
@@ -67,7 +68,7 @@ function NoteInput(): JSX.Element {
         const entry: EntryProps = {
           time: lapTime,
           text,
-          key: Date.toString(),
+          key: `entry-${index}`,
         };
         dispatch(addEntry(entry));
       }
