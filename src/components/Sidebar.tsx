@@ -59,7 +59,7 @@ const sidebarContent = css`
     opacity: 0;
   }
 
-  .open > & .fades {
+  .open & .fades {
     opacity: 1;
   }
 `;
@@ -119,6 +119,9 @@ const overlay = css`
 function Sidebar(): JSX.Element {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);
+  const curSection = useSelector(
+    (state: RootState) => state.sidebar.curSection
+  );
 
   const [help, setHelp] = useState("");
 
@@ -145,6 +148,23 @@ function Sidebar(): JSX.Element {
     };
   }, [isOpen]);
 
+  interface HandleEnterUpdateDeleteArgs {
+    hideEnteringElements: () => void;
+    animateExitingElements: () => Promise<void>;
+    animateFlippedElements: () => Promise<void> | void;
+    animateEnteringElements: () => void;
+  }
+  const simultaneousAnimations = ({
+    hideEnteringElements,
+    animateEnteringElements,
+    animateExitingElements,
+    animateFlippedElements,
+  }: HandleEnterUpdateDeleteArgs) => {
+    hideEnteringElements();
+    animateEnteringElements();
+    Promise.all([animateFlippedElements()]).then(animateExitingElements);
+  };
+
   return (
     <Fragment>
       <div ref={overlayRef} css={[overlay]} className={`${isOpen && "open"}`} />
@@ -162,7 +182,11 @@ function Sidebar(): JSX.Element {
             />
           </div>
         </div>
-        <Flipper flipKey="sidebarSection" css={sidebarContent}>
+        <Flipper
+          flipKey={curSection}
+          css={sidebarContent}
+          spring={{ stiffness: 120, damping: 20, overshootClamping: false }}
+        >
           <Settings />
           <Section
             index={1}

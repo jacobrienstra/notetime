@@ -1,4 +1,6 @@
+/* eslint-disable no-param-reassign */
 import { useDispatch, useSelector } from "react-redux";
+import { Flipped } from "react-flip-toolkit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -11,14 +13,19 @@ const sectionStyle = css`
   --header-font-size: 18px;
   width: 100%;
   background: white;
-  overflow: hidden;
-  flex: 0 1 auto;
-  display: flex;
-  flex-direction: column;
+  overflow: visible;
+
+  height: calc(((var(--header-font-size) + var(--logo-v-margin)) * 2));
+
+  &.expanded {
+    height: auto;
+  }
 `;
 
 const header = css`
   display: flex;
+  background: white;
+  z-index: 3;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -41,14 +48,10 @@ const header = css`
 const content = css`
   font-size: 14px;
   max-width: fit-content;
+  overflow: hidden;
   padding: 0;
-  overflow: scroll;
-  flex: 0 1 auto;
-  display: none;
-
-  .expanded > & {
-    display: block;
-  }
+  background: white;
+  z-index: 1;
 `;
 
 const contentPadding = css`
@@ -99,42 +102,49 @@ function Section(props: SectionProps): JSX.Element {
   const handleClick = () => {
     if (!isOpen) {
       dispatch(open());
+      dispatch(toggleSection(props.index));
     } else {
       dispatch(toggleSection(props.index));
     }
   };
 
   return (
-    <section
-      className={curSection === props.index ? "expanded" : ""}
-      css={[
-        sectionStyle,
-        css`
-          z-index: ${props.index + 1};
-        `,
-      ]}
-    >
-      <div css={header} onClick={handleClick}>
-        <FontAwesomeIcon
-          css={carat}
-          icon={faAngleRight as IconProp}
-          size="1x"
-        />
-        <div css={iconWrap}>
-          <div css={title} className="fades">
-            {props.title}
+    <Flipped translate flipId={`section-${props.index}`}>
+      <section
+        className={curSection === props.index ? "expanded" : ""}
+        css={[
+          sectionStyle,
+          css`
+            z-index: ${props.index + 10};
+          `,
+        ]}
+      >
+        <Flipped inverseFlipId={`section-${props.index}`} scale>
+          <div css={header} onClick={handleClick}>
+            <FontAwesomeIcon
+              css={carat}
+              icon={faAngleRight as IconProp}
+              size="1x"
+            />
+            <div css={iconWrap}>
+              <div css={title} className="fades">
+                {props.title}
+              </div>
+              <FontAwesomeIcon
+                css={[iconStyle, props.iconStyle]}
+                icon={props.icon}
+                size="2x"
+              />
+            </div>
           </div>
-          <FontAwesomeIcon
-            css={[iconStyle, props.iconStyle]}
-            icon={props.icon}
-            size="2x"
-          />
-        </div>
-      </div>
-      <div css={content} className="fades">
-        <div css={contentPadding}>{props.content}</div>
-      </div>
-    </section>
+        </Flipped>
+        <Flipped inverseFlipId={`section-${props.index}`} scale>
+          <div css={content} className="fades">
+            <div css={contentPadding}>{props.content}</div>
+          </div>
+        </Flipped>
+      </section>
+    </Flipped>
   );
 }
 
