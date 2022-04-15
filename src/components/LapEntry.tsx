@@ -17,22 +17,25 @@ import { EntryProps } from "./Entry";
 const textEntryWrapper = css`
   display: flex;
   flex-direction: column;
-  align-items: center;
   align-content: center;
+  align-items: center;
   margin: 16px 0;
 `;
 
 const textEntry = css`
   padding: 6px;
+
   font-size: 18px;
-  resize: none;
   font-family: serif;
+
+  resize: none;
 `;
 
 const timeStamp = css`
-  font-family: monospace;
-  font-size: 24px;
   align-self: flex-start;
+
+  font-size: 24px;
+  font-family: monospace;
 `;
 
 function LapEntry(): JSX.Element {

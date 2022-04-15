@@ -33,20 +33,24 @@ const buttonStyle = css`
     display: inline-block;
     width: 80px;
     height: 80px;
+    margin: 4px;
+    padding: 0;
+
     font-size: 18px;
     font-family: sans-serif;
-    cursor: pointer;
-    margin: 4px;
+
     border-radius: 50%;
-    padding: 0;
+    cursor: pointer;
+
     transition-property: border-color;
   }
 `;
 
 const playButton = (isActive: boolean, isPaused: boolean) => css`
   && {
-    color: var(--green);
     padding-left: ${!isActive || isPaused ? "4px" : "0px"};
+
+    color: var(--green);
   }
 `;
 

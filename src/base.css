@@ -30,14 +30,13 @@
 
 * {
   box-sizing: border-box;
-
-  /* overflow: hidden; */
 }
 
 body {
   color: var(--slate-900);
   font-size: 14px;
   font-family: monospace;
+
   user-select: none;
 }
 
@@ -58,6 +57,7 @@ h2 {
 
 h4 {
   margin: 6px 0;
+
   color: var(--cyan-800);
   font-weight: 700;
   font-size: 16px;
@@ -79,17 +79,21 @@ button {
   justify-content: center;
   margin: 0;
   padding: 1em 2em;
+
   color: var(--slate-900);
   font-size: inherit;
   font-family: monospace;
   text-align: center;
   text-decoration: none;
+
   background-color: transparent;
   border: 5px solid;
   border-color: var(--slate-300);
   border-radius: 6px;
   cursor: pointer;
+
   transition: all 0.1s ease-in-out 0s;
+
   appearance: none;
 }
 

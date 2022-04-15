@@ -12,10 +12,11 @@ import { open, toggleSection } from "../redux/reducers/sidebar";
 const sectionStyle = css`
   --header-font-size: 18px;
   width: 100%;
-  background: white;
-  overflow: visible;
 
   height: calc(((var(--header-font-size) + var(--logo-v-margin)) * 2));
+  overflow: visible;
+
+  background: white;
 
   &.expanded {
     height: auto;
@@ -23,21 +24,25 @@ const sectionStyle = css`
 `;
 
 const header = css`
-  display: flex;
-  background: white;
   z-index: 3;
+
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--logo-v-margin) var(--logo-h-margin);
-  font-size: var(--header-font-size);
+  justify-content: space-between;
+  box-sizing: border-box;
   width: 100%;
-  cursor: pointer;
-  border-width: 1px 0 1px 0;
+  padding: var(--logo-v-margin) var(--logo-h-margin);
+
+  font-size: var(--header-font-size);
+
+  background: white;
   border-color: transparent;
   border-style: solid;
+  border-width: 1px 0;
   border-collapse: collapse;
-  box-sizing: border-box;
+  cursor: pointer;
+
   transition: border-color 0.5s ease-in-out 0s;
 
   .open & {
@@ -46,12 +51,15 @@ const header = css`
 `;
 
 const content = css`
-  font-size: 14px;
-  max-width: fit-content;
-  overflow: hidden;
-  padding: 0;
-  background: white;
   z-index: 1;
+
+  max-width: fit-content;
+  padding: 0;
+  overflow: hidden;
+
+  font-size: 14px;
+
+  background: white;
 `;
 
 const contentPadding = css`
@@ -60,8 +68,9 @@ const contentPadding = css`
 
 const carat = css`
   justify-self: flex-start;
-  transition: transform 0.2s ease-in-out 0s;
   margin-left: 2px;
+
+  transition: transform 0.2s ease-in-out 0s;
 
   .expanded & {
     transform: rotate(90deg);

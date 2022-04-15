@@ -4,25 +4,26 @@ import timeString from "../util";
 
 const timeStringStyle = css`
   color: var(--blue);
-  font-family: monospace;
   font-size: 18px;
-  z-index: 100;
+  font-family: monospace;
 `;
 
 const textStyle = css`
-  font-family: serif;
+  padding: 8px 0;
+
   font-size: 18px;
+  font-family: serif;
   line-height: 1.3;
-  padding: 8px 0px;
-  z-index: 100;
 `;
 
 const entryStyle = css`
-  background: var(--slate-200);
-  padding: 8px 8px;
-  border-radius: 4px;
   width: 100%;
+  padding: 8px;
+
+  background: var(--slate-200);
+  border-radius: 4px;
   cursor: text;
+
   user-select: all;
 `;
 

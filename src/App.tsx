@@ -5,21 +5,21 @@ import Sidebar from "./components/Sidebar";
 import LapEntry from "./components/LapEntry";
 import EntryList from "./components/EntryList";
 
-const rootStyle = css`
-  margin: 0;
+const app = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
 `;
 
 function App(): JSX.Element {
   return (
-    <div className="app" css={rootStyle}>
+    <main className="app" css={app}>
       <Sidebar />
       <Timer />
       <LapEntry />
       <EntryList />
-    </div>
+    </main>
   );
 }
 

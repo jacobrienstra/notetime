@@ -8,11 +8,11 @@ import { RootState } from "../redux/store";
 import { setOrderReverse } from "../redux/reducers/settings";
 
 const settingsSection = css`
+  flex: 1 1 0px;
   box-sizing: border-box;
   width: 100%;
   min-width: 300px;
-  flex: 1 1 0px;
-  min-height: 0px;
+  min-height: 0;
 `;
 
 const paddingWrap = css`
@@ -24,17 +24,20 @@ const option = css`
 `;
 
 const optionAnswers = css`
-  font-size: 18px;
   display: flex;
+  flex-direction: column;
+  margin-left: 6px;
+
+  font-size: 18px;
 
   transition: all 0.5s;
-  margin-left: 6px;
-  flex-direction: column;
+
   & .checkWrap {
-    cursor: pointer;
     margin: 2px 0;
     padding: 6px;
+
     border-bottom: 1px solid var(--slate-200);
+    cursor: pointer;
 
     & svg {
       margin-left: 12px;

@@ -18,45 +18,51 @@ const sidebarStyle = css`
   --logo-width: 50px;
   --logo-h-margin: 12px;
   --logo-v-margin: 10px;
-  display: flex;
-  flex-direction: column;
   position: fixed;
-  border-radius: 0 4px 4px 0;
-  min-height: 100%;
-  max-height: 100%;
-  height: 100%;
+  top: 0;
   left: 0;
   z-index: 10;
-  top: 0;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-  box-sizing: border-box;
+
   font-family: monospace;
-  background: rgba(256, 256, 256, 0);
+
+  background: rgb(256 256 256 / 0%);
+  border-radius: 0 4px 4px 0;
   transform: translateX(
     calc(-100% + var(--logo-width) + var(--logo-h-margin) * 2)
   );
+
   transition: transform 0.5s ease-in-out 0s,
     background-color 0.2s ease-in-out 0.5s;
 
   &.open {
+    background: rgb(256 256 256 / 100%);
     transform: translateX(0);
-    background: rgba(256, 256, 256, 1);
+
     transition: background-color 0.1s ease-in-out 0s,
       transform 0.5s ease-in-out 0s;
   }
 `;
 
 const sidebarContent = css`
-  flex: 1 1 auto;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
 
   & .fades {
-    transition: opacity 0.5s ease-in-out 0s;
     opacity: 0;
+
+    transition: opacity 0.5s ease-in-out 0s;
   }
 
   .open & .fades {
@@ -70,8 +76,9 @@ const logo = css`
 
 const logoWrap = css`
   align-self: flex-end;
-  cursor: pointer;
+
   transform: scale(1);
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.1);
@@ -85,14 +92,15 @@ const logoWrap = css`
 const headerSection = css`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: var(--logo-v-margin) var(--logo-h-margin);
 `;
 
 const header = css`
   margin: -5px 30px 0 2px;
+
   cursor: pointer;
 `;
 
@@ -100,18 +108,22 @@ const overlay = css`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
+
   width: 100%;
   height: 100%;
   max-height: 100%;
-  z-index: 1;
-  background: rgba(0, 0, 0);
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out 0s, visibility 0s 0.5s;
+
+  background: rgb(0 0 0);
   visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 0.5s ease-in-out 0s, visibility 0s 0.5s;
 
   &.open {
     visibility: visible;
     opacity: 0.5;
+
     transition: visibility 0s 0s, opacity 0.5s ease-in-out 0s;
   }
 `;
@@ -148,28 +160,11 @@ function Sidebar(): JSX.Element {
     };
   }, [isOpen]);
 
-  interface HandleEnterUpdateDeleteArgs {
-    hideEnteringElements: () => void;
-    animateExitingElements: () => Promise<void>;
-    animateFlippedElements: () => Promise<void> | void;
-    animateEnteringElements: () => void;
-  }
-  const simultaneousAnimations = ({
-    hideEnteringElements,
-    animateEnteringElements,
-    animateExitingElements,
-    animateFlippedElements,
-  }: HandleEnterUpdateDeleteArgs) => {
-    hideEnteringElements();
-    animateEnteringElements();
-    Promise.all([animateFlippedElements()]).then(animateExitingElements);
-  };
-
   return (
     <Fragment>
       <div ref={overlayRef} css={[overlay]} className={`${isOpen && "open"}`} />
       <aside css={[sidebarStyle]} className={`${isOpen && "open"}`}>
-        <div css={headerSection}>
+        <header css={headerSection}>
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <h1 css={header} onClick={() => dispatch(closeAllSections())}>
             Settings
@@ -181,7 +176,7 @@ function Sidebar(): JSX.Element {
               alt="logo"
             />
           </div>
-        </div>
+        </header>
         <Flipper
           flipKey={curSection}
           css={sidebarContent}

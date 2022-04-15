@@ -21,31 +21,34 @@ const entriesSection = css`
 
 const entriesList = (reverseOrder: boolean) => css`
   display: flex;
-  flex-direction: ${reverseOrder ? "column-reverse" : "column"};
+  gap: 8px;
   align-content: stretch;
   align-items: stretch;
   min-width: 100%;
   max-width: fit-content;
-  gap: 8px;
-  list-style-type: none;
-  list-style-position: initial;
-  padding-inline-start: 0;
   margin: 0;
+
+  list-style-position: initial;
+  list-style-type: none;
+  padding-inline-start: 0;
+  flex-direction: ${reverseOrder ? "column-reverse" : "column"};
 `;
 
 const entriesSectionTitle = css`
-  font-size: 24px;
   align-self: flex-start;
+
+  font-size: 24px;
 `;
 
 const buttons = css`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-self: flex-start;
   gap: 30px;
-  font-size: 16px;
+  align-self: flex-start;
+  justify-content: center;
   margin-bottom: 16px;
+
+  font-size: 16px;
 
   button {
     padding: 0.5em 1em;
