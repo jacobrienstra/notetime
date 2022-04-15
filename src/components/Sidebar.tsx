@@ -112,7 +112,7 @@ const sidebarRoot = css`
 
 // Overlay prevents interaction with main page and focuses sidebar
 const overlay = css`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1;

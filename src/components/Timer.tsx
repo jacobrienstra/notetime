@@ -53,7 +53,7 @@ const timerControls = css`
 `;
 
 const playButton = (isActive: boolean, isPaused: boolean) => css`
-  && {
+  &&& {
     padding-left: ${!isActive || isPaused ? "4px" : "0px"};
   }
 `;

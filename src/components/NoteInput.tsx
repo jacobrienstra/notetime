@@ -33,7 +33,7 @@ const textEntry = css`
   outline-offset: 0px;
   border: 4px solid var(--slate-300);
 
-  resize: all;
+  resize: both;
   will-change: border-color;
 
   &:focus-visible {

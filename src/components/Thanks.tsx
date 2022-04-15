@@ -12,7 +12,8 @@ function Thanks(): JSX.Element {
     <div>
       <h2>Thanks </h2>
       <p>
-        Let me know if{" "}
+        I made this on a whim for a good friend, so it's cool others are using
+        it too. Please feel free to let me know if{" "}
         <a
           style={{ color: "var(--red-700)" }}
           href="https://github.com/jacobrienstra/notetime/issues/new?assignees=jacobrienstra&labels=bug&template=something-ain-t-right.md&title="
@@ -29,12 +30,11 @@ function Thanks(): JSX.Element {
         >
           suggestion or request
         </a>
-        ! I'll see what I can do.
+        . I'll see what I can do.
       </p>
       <p>
-        I made this on a whim for a good friend, but if you really appreciate it
-        and want to throw a few dollars at me, please stuff them in a rock and
-        no-scope me in the open marketplace. Or use Kofi.
+        And if for any reason you want to say hi or say thank you with money,
+        here's a button for that.
       </p>
       <div css={kofiButtonWrap}>
         <a href="https://ko-fi.com/H2H0BZNEN" target="\_blank" rel="noreferrer">

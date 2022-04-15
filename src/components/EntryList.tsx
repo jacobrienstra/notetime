@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import { faClipboard, faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -10,8 +11,6 @@ import { RootState } from "../redux/store";
 import { clearEntries } from "../redux/reducers/entries";
 
 import Entry from "./Entry";
-
-import { Fragment } from "react";
 
 const entriesList = (reverseOrder: boolean) => css`
   display: flex;

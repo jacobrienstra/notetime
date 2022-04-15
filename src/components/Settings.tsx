@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Flipped, Flipper } from "react-flip-toolkit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -57,30 +58,36 @@ function Settings(): JSX.Element {
         <div className="setting">
           <h4>Entry Order</h4>
           <div className="setting-options">
-            <div
-              role="option"
-              tabIndex={0}
-              className="setting-option"
-              aria-selected={!reverseOrder}
-              onClick={() => dispatch(setOrderReverse(false))}
-            >
-              Normal
-              {reverseOrder ? null : (
-                <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
-              )}
-            </div>
-            <div
-              role="option"
-              tabIndex={0}
-              className="setting-option"
-              aria-selected={reverseOrder}
-              onClick={() => dispatch(setOrderReverse(true))}
-            >
-              Reverse
-              {reverseOrder ? (
-                <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
-              ) : null}
-            </div>
+            <Flipper flipKey={reverseOrder}>
+              <div
+                role="option"
+                tabIndex={0}
+                className="setting-option"
+                aria-selected={!reverseOrder}
+                onClick={() => dispatch(setOrderReverse(false))}
+              >
+                Normal
+                <Flipped flipId="checkmark">
+                  {reverseOrder ? null : (
+                    <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                  )}
+                </Flipped>
+              </div>
+              <div
+                role="option"
+                tabIndex={0}
+                className="setting-option"
+                aria-selected={reverseOrder}
+                onClick={() => dispatch(setOrderReverse(true))}
+              >
+                Reverse
+                <Flipped flipId="checkmark">
+                  {reverseOrder ? (
+                    <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                  ) : null}
+                </Flipped>
+              </div>
+            </Flipper>
           </div>
         </div>
       </div>
