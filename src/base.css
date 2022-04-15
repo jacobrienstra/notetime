@@ -37,6 +37,7 @@
 body {
   color: var(--slate-900);
   font-size: 14px;
+  font-family: monospace;
   user-select: none;
 }
 
@@ -72,6 +73,7 @@ h5 {
 
 button {
   display: inline-flex;
+  flex-direction: row;
   align-content: center;
   align-items: center;
   justify-content: center;

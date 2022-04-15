@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {} from "@fortawesome/free-solid-svg-icons";
+import { faClipboard, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
@@ -15,7 +16,7 @@ const entriesSection = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  min-width: 400px;
 `;
 
 const entriesList = (reverseOrder: boolean) => css`
@@ -23,25 +24,39 @@ const entriesList = (reverseOrder: boolean) => css`
   flex-direction: ${reverseOrder ? "column-reverse" : "column"};
   align-content: stretch;
   align-items: stretch;
-  max-width: 500px;
   min-width: 100%;
+  max-width: fit-content;
   gap: 8px;
+  list-style-type: none;
+  list-style-position: initial;
+  padding-inline-start: 0;
+  margin: 0;
 `;
 
-const buttonWrapper = css`
+const entriesSectionTitle = css`
+  font-size: 24px;
+  align-self: flex-start;
+`;
+
+const buttons = css`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-self: flex-start;
   gap: 30px;
-  width: 100%;
-  font-size: 14px;
+  font-size: 16px;
+  margin-bottom: 16px;
 
   button {
-    display: inline-block;
+    padding: 0.5em 1em;
+  }
+
+  span {
+    margin-left: 0.5em;
   }
 
   svg {
-    margin-right: 0.5em;
+    font-size: 24px;
   }
 `;
 
@@ -74,22 +89,23 @@ function EntryList(): JSX.Element {
 
   return (
     <div css={entriesSection}>
-      <div css={buttonWrapper}>
-        <button type="button" onClick={copy}>
-          <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
-          Copy Entries
-        </button>
+      <h4 css={entriesSectionTitle}>Entries</h4>
+      <div css={buttons}>
         <button type="button" onClick={clear} css={clearButton}>
           <FontAwesomeIcon icon={faTrashCan as IconProp} size="1x" />
-          Clear Entries
+          <span>Clear All</span>
+        </button>{" "}
+        <button type="button" onClick={copy}>
+          <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
+          <span>Copy All</span>
         </button>
       </div>
 
-      <div className="entries" css={entriesList(reverseOrder)}>
+      <ul className="entries" css={entriesList(reverseOrder)}>
         {entries.map((e) => (
           <Entry {...e} key={e.key} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

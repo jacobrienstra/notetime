@@ -23,7 +23,7 @@ const entryStyle = css`
   border-radius: 4px;
   width: 100%;
   cursor: text;
-  user-select: text;
+  user-select: all;
 `;
 
 export type EntryProps = {
@@ -34,10 +34,10 @@ export type EntryProps = {
 
 function Entry({ time, text }: EntryProps): JSX.Element {
   return (
-    <div css={entryStyle}>
+    <li css={entryStyle}>
       <span css={timeStringStyle}>[{timeString(time)}] - </span>
       <span css={textStyle}>{text}</span>
-    </div>
+    </li>
   );
 }
 
