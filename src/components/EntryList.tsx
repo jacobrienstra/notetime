@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import { faClipboard, faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -47,12 +47,27 @@ const entryButtons = css`
   button {
     flex: 1 1 50%;
     padding: 0.5em 1em;
+    position: relative;
 
     svg {
       font-size: 24px;
     }
     span {
       margin-left: 0.5em;
+    }
+
+    #copy-confirm {
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out 0s, transform 0.2s ease-in-out 0.5s;
+
+      &.active {
+        transform: translateY(-300%);
+        opacity: 1;
+        transition: all 0.5s;
+      }
     }
 
     &.clear-button {
@@ -72,16 +87,36 @@ function EntryList(): JSX.Element {
   const reverseOrder = useSelector(
     (state: RootState) => state.settings.reverseOrder
   );
+  const copiedRef = useRef<HTMLSpanElement>(null);
 
   const clear = () => {
     dispatch(clearEntries());
   };
 
   const copy = () => {
-    const entriesText = entries.map(
-      (e) => `[${timeString(e.time)}] - ${e.text}`
-    );
-    navigator.clipboard.writeText(entriesText.join(""));
+    const entriesText = entries
+      .map((e) => `[${timeString(e.time)}] - ${e.text}`)
+      .join("\n");
+    navigator.clipboard
+      .writeText(entriesText)
+      .then(() => {
+        if (entriesText !== "" && copiedRef.current != null) {
+          copiedRef.current.textContent = "Copied!";
+          copiedRef.current?.classList.add("active");
+          setTimeout(() => {
+            copiedRef.current?.classList.remove("active");
+          }, 500);
+        }
+      })
+      .catch(() => {
+        if (entriesText !== "" && copiedRef.current != null) {
+          copiedRef.current.textContent = "Error :(";
+          copiedRef.current?.classList.add("active");
+          setTimeout(() => {
+            copiedRef.current?.classList.remove("active");
+          }, 500);
+        }
+      });
   };
 
   return (
@@ -103,6 +138,9 @@ function EntryList(): JSX.Element {
           className="copy-button"
           title="Copy all entries"
         >
+          <span ref={copiedRef} id="copy-confirm">
+            Copied!
+          </span>
           <FontAwesomeIcon icon={faClipboard as IconProp} size="1x" />
           <span>Copy All</span>
         </button>
