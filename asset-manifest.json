@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/notetime/static/css/main.889ac29d.css",
-    "main.js": "/notetime/static/js/main.3a1ad1e7.js",
-    "index.html": "/notetime/index.html"
+    "main.css": "/notetime/static/css/main.c85a68b2.css",
+    "main.js": "/notetime/static/js/main.6bf02fb2.js",
+    "index.html": "/notetime/index.html",
+    "static/media/help.md": "/notetime/static/media/help.97001c6cc9a53136e2bd.md"
   },
   "entrypoints": [
-    "static/css/main.889ac29d.css",
-    "static/js/main.3a1ad1e7.js"
+    "static/css/main.c85a68b2.css",
+    "static/js/main.6bf02fb2.js"
   ]
 }
