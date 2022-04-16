@@ -27,6 +27,7 @@ const sidebarRoot = css`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  width: min-content;
   height: 100%;
   min-height: 100%;
   max-height: 100%;
@@ -40,7 +41,7 @@ const sidebarRoot = css`
 
   // On exit, we want to move out before we start fading
   transition: transform 0.5s ease-in-out 0s,
-    background-color 0.2s ease-in-out 0.5s;
+    background-color 0.3s ease-in-out 0.15s;
 
   will-change: transform, opacity, background-color;
 

@@ -25,6 +25,7 @@ const timeStamp = css`
 
 const textEntry = css`
   padding: 6px;
+  max-width: 100%;
 
   font-size: 18px;
   font-family: serif;
@@ -87,7 +88,7 @@ function NoteInput(): JSX.Element {
       <div css={timeStamp}>{timeString(lapTime)}</div>
       <textarea
         cols={36}
-        rows={3}
+        rows={4}
         value={text}
         onKeyUp={handleOnKeyUp}
         onKeyDown={handleOnKeyDown}

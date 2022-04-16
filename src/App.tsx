@@ -16,6 +16,8 @@ const mainRoot = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  padding: 0 12px;
 `;
 
 function App(): JSX.Element {
