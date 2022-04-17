@@ -20,14 +20,14 @@ function Thanks(): JSX.Element {
           target="_blank"
           rel="noreferrer"
         >
-          found a bug or would like a new feature
+          found a bug or have a feature suggestion/request
         </a>
         . I'll see what I can do.
       </p>
       <p>
         And if for any reason you want to{" "}
         <a
-          href="https://twitter.com/messages/compose?recipient_id=2922787775"
+          href="https://twitter.com/jacobsheepstra"
           target="_blank"
           rel="noreferrer"
         >
