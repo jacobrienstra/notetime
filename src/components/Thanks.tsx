@@ -13,28 +13,27 @@ function Thanks(): JSX.Element {
       <h2>Thanks </h2>
       <p>
         I made this on a whim for a good friend, so it's cool others are using
-        it too. Please feel free to let me know if{" "}
+        it too. Please feel free to let me know if you{" "}
         <a
-          style={{ color: "var(--red-700)" }}
-          href="https://github.com/jacobrienstra/notetime/issues/new?assignees=jacobrienstra&labels=bug&template=something-ain-t-right.md&title="
+          style={{ color: "var(--blue)" }}
+          href="https://docs.google.com/forms/d/1jdEFzNhJifLXGDvmAlfuPcArH4Z_CCm0rnNIWqUXoBQ/"
           target="_blank"
           rel="noreferrer"
         >
-          something isn't working
-        </a>{" "}
-        or if you have a{" "}
-        <a
-          href="https://github.com/jacobrienstra/notetime/issues/new?assignees=jacobrienstra&labels=enhancement&template=feature-request.md&title="
-          target="_blank"
-          rel="noreferrer"
-        >
-          suggestion or request
+          found a bug or would like a new feature
         </a>
         . I'll see what I can do.
       </p>
       <p>
-        And if for any reason you want to say hi or say thank you with money,
-        here's a button for that.
+        And if for any reason you want to{" "}
+        <a
+          href="https://twitter.com/messages/compose?recipient_id=2922787775"
+          target="_blank"
+          rel="noreferrer"
+        >
+          say hi
+        </a>{" "}
+        or say thank you with money, here's a button for that:
       </p>
       <div css={kofiButtonWrap}>
         <a href="https://ko-fi.com/H2H0BZNEN" target="\_blank" rel="noreferrer">
