@@ -37,10 +37,11 @@ const textEntry = css`
   resize: both;
   will-change: border-color;
 
-  &:focus-visible {
+  &:focus-visible,
+  &:focus {
     border-color: var(--cyan-500);
     outline-color: var(--cyan-500);
-    outline-style: hidden;
+    outline-style: none;
     outline-width: 1px;
   }
 `;

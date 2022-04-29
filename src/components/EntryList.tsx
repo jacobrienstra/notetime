@@ -14,7 +14,7 @@ import Entry from "./Entry";
 
 const entriesList = (reverseOrder: boolean) => css`
   display: flex;
-  gap: 8px;
+  /* gap: 8px; */
   align-content: stretch;
   align-items: stretch;
   min-width: 100%;
@@ -25,6 +25,10 @@ const entriesList = (reverseOrder: boolean) => css`
   list-style-type: none;
   padding-inline-start: 0;
   flex-direction: ${reverseOrder ? "column-reverse" : "column"};
+
+  li + li {
+    margin-top: 8px;
+  }
 `;
 
 const entriesSectionTitle = css`
@@ -37,10 +41,14 @@ const entriesSectionTitle = css`
 const entryButtons = css`
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  /* gap: 30px; */
   align-self: stretch;
   justify-content: center;
   margin-bottom: 16px;
+
+  button + button {
+    margin-left: 30px;
+  }
 
   font-size: 16px;
 
