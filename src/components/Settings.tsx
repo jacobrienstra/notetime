@@ -6,13 +6,13 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { css } from "@emotion/react";
 
 import { RootState } from "../redux/store";
-import { setOrderReverse } from "../redux/reducers/settings";
+import { setOrderReverse, setPrecision } from "../redux/reducers/settings";
 
 const settingsRoot = css`
   flex: 1 1 0px;
   box-sizing: border-box;
   width: 100%;
-  min-width: 300px;
+  min-width: 320px;
   min-height: 0;
 
   .wrapper {
@@ -51,6 +51,7 @@ function Settings(): JSX.Element {
   const reverseOrder = useSelector(
     (state: RootState) => state.settings.reverseOrder
   );
+  const precision = useSelector((state: RootState) => state.settings.precision);
 
   return (
     <section css={settingsRoot} className="fades">
@@ -66,7 +67,7 @@ function Settings(): JSX.Element {
                 aria-selected={!reverseOrder}
                 onClick={() => dispatch(setOrderReverse(false))}
               >
-                Normal
+                Chronological
                 <Flipped flipId="checkmark">
                   {reverseOrder ? null : (
                     <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
@@ -83,6 +84,41 @@ function Settings(): JSX.Element {
                 Reverse
                 <Flipped flipId="checkmark">
                   {reverseOrder ? (
+                    <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                  ) : null}
+                </Flipped>
+              </div>
+            </Flipper>
+          </div>
+        </div>
+        <div className="setting">
+          <h4>Precision (00:00{precision === 1 ? ".0" : ""})</h4>
+          <div className="setting-options">
+            <Flipper flipKey={precision}>
+              <div
+                role="option"
+                tabIndex={0}
+                className="setting-option"
+                aria-selected={precision === 0}
+                onClick={() => dispatch(setPrecision(0))}
+              >
+                0 (Seconds)
+                <Flipped flipId="checkmark">
+                  {precision === 0 ? (
+                    <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
+                  ) : null}
+                </Flipped>
+              </div>
+              <div
+                role="option"
+                tabIndex={0}
+                className="setting-option"
+                aria-selected={precision === 1}
+                onClick={() => dispatch(setPrecision(1))}
+              >
+                1 (1/10 seconds)
+                <Flipped flipId="checkmark">
+                  {precision === 1 ? (
                     <FontAwesomeIcon icon={faCheck as IconProp} size="1x" />
                   ) : null}
                 </Flipped>

@@ -8,8 +8,8 @@ import { css } from "@emotion/react";
 import timeString from "../util";
 import { RootState } from "../redux/store";
 import {
-  incTime10,
   start,
+  setTime,
   pause,
   unpause,
   stop,
@@ -68,13 +68,18 @@ function Timer(): JSX.Element {
   let timerWorker: Worker;
 
   const startTimerWorker = () => {
-    timerWorker = new Worker(`${process.env.PUBLIC_URL}/timerWorker.js`);
-    timerWorker.onmessage = (e: MessageEvent) => {
-      if (e?.data === "tick") {
-        dispatch(incTime10());
+    if (typeof Worker !== "undefined") {
+      if (timerWorker == null) {
+        timerWorker = new Worker(`${process.env.PUBLIC_URL}/timerWorker.js`);
+      } else {
+        timerWorker.terminate();
+        timerWorker = new Worker(`${process.env.PUBLIC_URL}/timerWorker.js`);
       }
-    };
-    timerWorker.postMessage("start");
+      timerWorker.onmessage = (e: MessageEvent) => {
+        dispatch(setTime(e.data));
+      };
+      timerWorker.postMessage("start");
+    }
   };
 
   useEffect(() => {

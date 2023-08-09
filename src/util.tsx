@@ -1,9 +1,14 @@
-const timeString = (time: number): string => {
-  const minutes = `0${Math.floor((time / 60000) % 60)}`.slice(-2);
-  const seconds = `0${Math.floor((time / 1000) % 60)}`.slice(-2);
-  const hundredths = `0${(time / 10) % 100}`.slice(-2);
+import { useSelector } from "react-redux";
 
-  return `${minutes !== "00" ? `${minutes}:` : ""}${seconds}.${hundredths}`;
+import type { RootState } from "./redux/store";
+
+const timeString = (time: number): string => {
+  const precision = useSelector((state: RootState) => state.settings.precision);
+  const minutes = `${Math.floor((time / 60000) % 60)}`.padStart(2, "0");
+  const seconds = `${Math.floor((time / 1000) % 60)}`.padStart(2, "0");
+  const tenths = `${Math.round((time / 100) % 10)}`;
+
+  return `${minutes}:${seconds}${precision === 0 ? "" : `.${tenths}`}`;
 };
 
 export default timeString;

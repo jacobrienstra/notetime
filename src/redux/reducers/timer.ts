@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TimerSliceState {
   time: number;
+  pausedTime: number;
   isActive: boolean;
   isPaused: boolean;
   lapTime: number;
@@ -13,17 +14,19 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState: {
     time: 0,
+    pausedTime: 0,
     isActive: false,
     isPaused: false,
     lapTime: 0,
     text: "",
   } as TimerSliceState,
   reducers: {
-    incTime10: (state): void => {
-      state.time += 10;
+    setTime: (state, action: PayloadAction<number>): void => {
+      state.time = state.pausedTime + action.payload;
     },
     resetTime: (state): void => {
       state.time = 0;
+      state.pausedTime = 0;
     },
     setLapTime: (state, action: PayloadAction<number>): void => {
       state.lapTime = action.payload;
@@ -41,6 +44,7 @@ export const timerSlice = createSlice({
     },
     pause: (state): void => {
       state.isPaused = true;
+      state.pausedTime = state.time;
     },
     unpause: (state): void => {
       state.isPaused = false;
@@ -55,7 +59,7 @@ export const timerSlice = createSlice({
 });
 
 export const {
-  incTime10,
+  setTime,
   resetTime,
   setLapTime,
   resetLapTime,

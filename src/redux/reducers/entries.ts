@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { EntryProps } from "../../components/Entry";
+import type { EntryProps } from "../../components/Entry";
 
 interface EntriesSliceState {
   list: EntryProps[];
